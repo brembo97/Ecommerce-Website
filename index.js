@@ -1,6 +1,6 @@
 const express = require('express');
-const nodemon = require('nodemon');
 const bodyParser = require('body-parser');
+const userRepo = require('./repositories/users.js');
 
 const app = express();
 
@@ -19,8 +19,17 @@ app.get('/', (req, res) => {
     `)
 })
 
-app.post('/', (req, res) => {
-    console.log(req.body)
+app.post('/', async (req, res) => {
+    const {email, password, confirmPassword} = req.body;
+
+    if(await userRepo.getOneBy({email})){
+        return res.send("That email is already associated with another account.")
+    }
+
+    if(password !== confirmPassword ){
+        return res.send("Passwords must be the same")
+    }
+
     res.send("Account Created");
 })
 
