@@ -23,7 +23,7 @@ class Repository {
         }))
     }
 
-    async createUser(attrs){
+    async create(attrs){
         attrs.id = this.generateRandomId();
         const records = await this.getAll()
 

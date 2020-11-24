@@ -4,33 +4,21 @@ const {validationResult} = require('express-validator');
 const userRepo = require('../../repositories/users');
 const signUpTemplate = require('../../views/admin/auth/signUpTemplate');
 const signInTemplate = require('../../views/admin/auth/signInTemplate');
-const { emailValidation,
-        passwordValidation,
-        confirmPasswordValidation,
-        requireExistingEmail,
-        requireCorrectCredentials } = require('./validation');
+const { emailValidation, passwordValidation, confirmPasswordValidation,
+        requireExistingEmail, requireCorrectCredentials } = require('./validation');
+const { handleValidationError} = require('./middleware')
 
 const router = express.Router();
 
 router.get('/signup', (req, res) => {
-    res.send(signUpTemplate({ req }))
+    res.send(signUpTemplate({ }))
 })
 
-router.post('/signup', [
-        emailValidation,
-        passwordValidation,
-        confirmPasswordValidation,
-    ], 
+router.post('/signup',
+    [emailValidation, passwordValidation, confirmPasswordValidation],
+    handleValidationError(signUpTemplate),
     async (req, res) => {
-        const {email, password, confirmPassword} = req.body;
-        
-        //Check for validation errors
-        const errors = validationResult(req);
-        console.log(errors)
-
-        if(!errors.isEmpty()){
-            return res.send(signUpTemplate({ req, errors }))    
-        }
+        const {email, password} = req.body;
         
         //Create user with sanitized info
         const user = await userRepo.createUser({email, password});
@@ -42,26 +30,14 @@ router.get('/signin', (req, res) =>{
     res.send(signInTemplate({}))
 })
 
-router.post('/signin', [
-    requireExistingEmail,
-    requireCorrectCredentials
-    ],
+router.post('/signin',
+    [requireExistingEmail, requireCorrectCredentials],
+    handleValidationError(signInTemplate),
     async (req, res) => {
-
-    //User authentication
-    const errors = validationResult(req)
-    console.log(errors)
-
-    //Invalid credentials
-    if(!errors.isEmpty()){
-        return res.send(signInTemplate({ errors }))
-    }
-
-    //Correct credentials, login
-    const user = await userRepo.getOneBy({email: req.body.email})
-    req.session.id  = user.id;
-    res.send("Success login in!!");
-    
+        //Correct credentials, login
+        const user = await userRepo.getOneBy({email: req.body.email})
+        req.session.id  = user.id;
+        res.send("Success login in!!");
 })
 
 router.get('/signout', (req, res) => {
