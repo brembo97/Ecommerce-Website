@@ -1,14 +1,16 @@
 const express = require('express');
-const router = express.Router();
-const {check, validationResult} = require('express-validator')
+const {validationResult} = require('express-validator');
+
 const userRepo = require('../../repositories/users');
-const signUpTemplate = require('../../views/admin/signUpTemplate')
-const signInTemplate = require('../../views/admin/signInTemplate');
+const signUpTemplate = require('../../views/admin/auth/signUpTemplate');
+const signInTemplate = require('../../views/admin/auth/signInTemplate');
 const { emailValidation,
         passwordValidation,
         confirmPasswordValidation,
         requireExistingEmail,
         requireCorrectCredentials } = require('./validation');
+
+const router = express.Router();
 
 router.get('/signup', (req, res) => {
     res.send(signUpTemplate({ req }))
