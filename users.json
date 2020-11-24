@@ -1,22 +1,17 @@
 [
   {
-    "email": "asfasdfas@gmail.com",
-    "password": "holabb",
-    "id": "f6a431e0"
-  },
-  {
-    "email": "asfasdfas",
-    "password": "holabb",
-    "id": "2b06b9ed"
-  },
-  {
-    "email": "heyyou@gmail.com",
-    "password": "whatup",
-    "id": "c9bc6ee3"
-  },
-  {
     "email": "flofi@flofi.com",
     "password": "3b7da42a54597866dea42a5adc5b5071c0e9e1c75c33edb90fd36b69fc74f6535edd6142ef46d5ea58c7f107cac02b177914d0373b74f0e94b1f98c2c9545974.4971a0a8c926ce5c",
     "id": "4d5268cc"
+  },
+  {
+    "email": "@asdf",
+    "password": "09c458ba0230996663e8eba393eecd5a1e302f9fb6d4c7f4035b4195a0df47c49b29a143a6c5de17a6580a5380cb41620a104f5afce98aa89e9c7f9554499987.b4b8acfc49aac285",
+    "id": "e58ae7b4"
+  },
+  {
+    "email": "emilio@gmail.com",
+    "password": "74fc5cb4addd9a112b9a5bd18f7a92c872378073e2c3137ab23ebe6c4154dc4b181e8e40322290d51cc64734f0cb964d8863540a0a10ebe2c74cf0aaa8a24b63.5b37e875bb1a090e",
+    "id": "f28fbd71"
   }
 ]
