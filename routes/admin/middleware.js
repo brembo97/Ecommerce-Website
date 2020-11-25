@@ -11,5 +11,12 @@ module.exports = {
             }
             next();
         }
+    },
+    requireAuthorization(req, res, next){
+        if(!req.session){
+            return res.redirect('/signin')
+        }
+
+        next();
     }
 }

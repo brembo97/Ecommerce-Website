@@ -23,7 +23,7 @@ router.post('/signup',
         //Create user with sanitized info
         const user = await userRepo.createUser({email, password});
         req.session.id = user.id;
-        res.send("Account Created");
+        res.redirect('/admin/products');
 })
 
 router.get('/signin', (req, res) =>{
@@ -37,7 +37,7 @@ router.post('/signin',
         //Correct credentials, login
         const user = await userRepo.getOneBy({email: req.body.email})
         req.session.id  = user.id;
-        res.send("Success login in!!");
+        res.redirect('/admin/products');
 })
 
 router.get('/signout', (req, res) => {
