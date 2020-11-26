@@ -56,8 +56,35 @@ router.get('/admin/products/:id/edit', requireAuthorization, async (req, res) =>
     res.send( productEditTemplate({ product }) );
 })
 
-router.post('/admin/products/:id/edit', requireAuthorization, async (req, res) => {
-    res.redirect('/admin/products');
+router.post('/admin/products/:id/edit',
+    requireAuthorization,
+    upload.single('image'),
+    [titleValidation, priceValidation],
+    handleValidationError( productEditTemplate, async (req) => {
+        const product = await prodRepo.getOne(req.params.id);
+        return {product}
+    }),
+    async (req, res) => {
+        const {title, price} = req.body;
+
+        let image;
+        if(req.file) image = req.file.buffer.toString('base64');
+        else image = '';
+
+        try{
+            await prodRepo.update(req.params.id, {title, price, image})
+        }catch(err){
+            return res.send(err);
+        }
+
+        res.redirect('/admin/products');
+})
+
+router.post('/admin/products/:id/delete',
+    requireAuthorization,
+    async (req, res) => {
+        await prodRepo.delete(req.params.id)
+        res.redirect('/admin/products')
 })
 
 module.exports = router;
