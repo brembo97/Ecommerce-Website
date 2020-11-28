@@ -6,8 +6,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 const newProductTemplate = require('../../views/admin/products/new');
 const productIndexTemplate  = require('../../views/admin/products/index.js');
 const productEditTemplate  = require('../../views/admin/products/edit.js');
-const {titleValidation, priceValidation} = require('../../routes/admin/validation')
 const prodRepo = require('../../repositories/products');
+const {titleValidation, priceValidation} = require('../../routes/admin/validation')
 const { handleValidationError, requireAuthorization } = require('./middleware')
 
 const router = express.Router();
